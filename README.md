@@ -1,3 +1,4 @@
-# Plantilla del curso programación para QA
+# roomie-bot
 
-Plantilla para el [curso de desarrollo para QA](https://jj.github.io/curso-tdd)
+## Contribuidores
++ [Francisco Javier Bolívar Expósito](https://github.com/dipzza)
