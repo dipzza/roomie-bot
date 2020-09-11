@@ -5,6 +5,15 @@ Al compartir piso hay muchos gastos en común que suele pagar una persona tempor
 
 Como solución a este problema se plantea un cliente de API de telegram, un bot, que permita de forma transparente y común tener apuntadas la deudas en grupo. Este módulo de deudas sería una parte del bot con utilidades para compañeros de piso, al que posteriormente tras el curso se le pueden añadir recordatorios, reparto de tareas de limpieza u otras funciones.
 
+## Herramientas utilizadas
+
++ Lenguaje: Python.
++ Servicio de Logging: modulo logging de Python.
++ Configuración remota: etcd.
++ Almacenamiento de datos: SQLite
+
+Discutido en Issue [#3](https://github.com/dipzza/roomie-bot/issues/3)
+
 
 ## Contribuidores
 + [Francisco Javier Bolívar Expósito](https://github.com/dipzza)
