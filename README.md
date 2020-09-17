@@ -7,13 +7,21 @@ Como solución a este problema se plantea un cliente de API de telegram, un bot,
 
 ## Herramientas utilizadas
 
-+ Lenguaje: Python.
++ Lenguaje: Python con [python-telegram-bot](https://github.com/python-telegram-bot/python-telegram-bot).
 + Servicio de Logging: modulo logging de Python.
 + Configuración remota: etcd.
 + Almacenamiento de datos: SQLite
 
 Discutido en Issue [#3](https://github.com/dipzza/roomie-bot/issues/3)
 
+## Estructura del proyecto
+
++ Todo el código se encuentra en la carpeta 'roomie-bot'.
+	- [bot.py](roomie-bot/bot.py) contiene el módulo principal, que se encarga de recibir y responder a los mensajes de telegram llamando a los siguientes submodulos
+	- El modulo [database](roomie-bot/database/) se encarga de hacer operaciones en la base de datos sqlite.
+	- El modulo [expenses](roomie-bot/expenses/) se encarga de procesar todo lo necesario relativo a las deudas.
+
++ Se han añadido a la raíz del repositorio los archivos [requirements.txt](requirements.txt) y [setup.py](setup.py) para facilitar la instalación de la aplicación y sus dependencias.
 
 ## Contribuidores
 + [Francisco Javier Bolívar Expósito](https://github.com/dipzza)
