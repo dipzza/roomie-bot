@@ -21,7 +21,5 @@ Discutido en Issue [#3](https://github.com/dipzza/roomie-bot/issues/3)
 	- El modulo [database](roomie-bot/database/) se encarga de hacer operaciones en la base de datos sqlite.
 	- El modulo [expenses](roomie-bot/expenses/) se encarga de procesar todo lo necesario relativo a las deudas.
 
-+ Se han añadido a la raíz del repositorio los archivos [requirements.txt](requirements.txt) y [setup.py](setup.py) para facilitar la instalación de la aplicación y sus dependencias.
-
 ## Contribuidores
 + [Francisco Javier Bolívar Expósito](https://github.com/dipzza)
