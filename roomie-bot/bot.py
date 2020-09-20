@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import logging
+import os
 
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
@@ -15,7 +16,11 @@ logger = logging.getLogger(__name__)
 # Define a few command handlers.
 def start(update, context):
     """Send a message when the command /start is issued."""
-    update.message.reply_text('Hi!')
+    update.message.reply_text(
+        'Hi! I am roomie, a bot with tools to make life easier between roommates.' +
+        '\nI can help you tracking your expenses or organizing tasks' +
+        '\n\nSend /help for a list of commands'
+    )
 
 
 def pay(update, context):
@@ -43,7 +48,8 @@ def error(update, context):
 def main():
     """Start the bot."""
     # Create the Updater and pass it bot's token.
-    updater = Updater("TOKEN", use_context=True)
+    TOKEN = os.environ.get("TOKEN")
+    updater = Updater(TOKEN, use_context=True)
 
     # Get the dispatcher to register handlers
     dp = updater.dispatcher

@@ -6,13 +6,13 @@ from database import Database
 db = Database()
 
 
-def new_payment(chat_id, user, message):
+def new_payment(chat_id: int, user: str, message: str):
     pass
 
 
-def get_history(chat_id, message):
+def get_history(chat_id: int, message: str):
     pass
 
 
-def get_debts(chat_id, user):
+def get_debts(chat_id: int):
     pass
