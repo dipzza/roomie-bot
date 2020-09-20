@@ -2,25 +2,26 @@
 # -*- coding: utf-8 -*-
 
 import sqlite3
+from typing import List
 
 
 class Database:
     def __init__(self, dbname="room.sqlite"):
-        self.dbname = dbname
-        self.conn = sqlite3.connect(dbname)
+        self._dbname = dbname
+        self._conn = sqlite3.connect(dbname)
 
     def setup(self):
         pass
 
     # Expenses related
-    def add_payment(self, id, money, payer, debtors, description):
+    def add_payment(self, chat_id: int, money: float, payer: str, debtors: List[str], description: str):
         pass
 
-    def get_payments(self, id):
+    def get_payments(self, chat_id: int):
         pass
 
-    def update_debt(self, id, money, payer, debtor):
+    def update_debt(self, chat_id: int, money: float, payer: str, debtor: str):
         pass
 
-    def get_debts(self, id, user):
+    def get_debts(self, chat_id: int):
         pass
