@@ -1,7 +1,8 @@
 {
   "lenguaje" : "Python",
   "build" : "pyproject.toml",
-  "ficheros" : ["roomie-bot/database/database.py",
-                "roomie-bot/bot.py",
-                "roomie-bot/expenses/expenses.py"]
+  "ficheros" : ["roomie_bot/database/database.py",
+                "roomie_bot/bot.py",
+                "roomie_bot/expenses/expenses.py"]
+  "tests" : "test" : ["tests/test_database.py"]
 }
