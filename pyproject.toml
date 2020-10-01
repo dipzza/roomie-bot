@@ -11,6 +11,12 @@ python-telegram-bot = "^12.8"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.1.0"
+pytest-cov = "^2.10.1"
+taskipy = "^1.3.0"
+
+[tool.taskipy.tasks]
+test = "pytest"
+bot = "roomie_bot/bot.py"
 
 [build-system]
 requires = ["poetry>=0.12"]
