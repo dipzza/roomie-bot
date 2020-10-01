@@ -52,8 +52,8 @@ class Database:
                                 LIMIT ?
                                 ''', (chat_id, n, )).fetchall()
 
-    def add_debt(self, user_id: int, chat_id: int):
-        self._c.execute('INSERT INTO debts (user_id, chat_id) VALUES (?, ?);', (user_id, chat_id, ))
+    def add_debt(self, user_id: int, chat_id: int, debt: float):
+        self._c.execute('INSERT INTO debts (user_id, chat_id, debt) VALUES (?, ?, ?);', (user_id, chat_id, debt, ))
         self._conn.commit()
 
     def update_debt(self, user_id: int, chat_id: int, debt: float):
