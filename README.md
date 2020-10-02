@@ -54,3 +54,7 @@ Discutido en Issue [#3](https://github.com/dipzza/roomie-bot/issues/3)
 
 ## Contribuidores
 + [Francisco Javier Bolívar Expósito](https://github.com/dipzza)
+
+### Icono (provisional)
+
+ ![](/img/robotito.png)
