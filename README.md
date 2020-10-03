@@ -1,5 +1,6 @@
 # roomie-bot
 [![Build Status](https://travis-ci.com/dipzza/roomie-bot.svg?branch=master)](https://travis-ci.com/dipzza/roomie-bot)
+[![codecov](https://codecov.io/gh/dipzza/roomie-bot/branch/master/graph/badge.svg?token=DR8OVMCUBX)](undefined)
 
 Bot de telegram en desarrollo para el [curso de programación para QA](https://github.com/JJ/curso-tdd)
 
