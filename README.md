@@ -1,4 +1,6 @@
 # roomie-bot
+[![Build Status](https://travis-ci.com/dipzza/roomie-bot.svg?branch=master)](https://travis-ci.com/dipzza/roomie-bot)
+
 Bot de telegram en desarrollo para el [curso de programación para QA](https://github.com/JJ/curso-tdd)
 
 Al compartir piso hay muchos gastos en común que suele pagar una persona temporalmente, recordar cuanto dinero se debe entre todos los compañeros puede ser complicado.
