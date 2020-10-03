@@ -7,4 +7,7 @@ install:
     - poetry install
 # Running tests
 script:
-    - poetry run task test
+    - poetry run task coverage
+
+after_success:
+    - codecov

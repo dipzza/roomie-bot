@@ -17,6 +17,7 @@ taskipy = "^1.3.0"
 [tool.taskipy.tasks]
 bot = "roomie_bot/bot.py"
 test = "pytest"
+coverage = "pytest --cov=./"
 
 [build-system]
 requires = ["poetry>=0.12"]

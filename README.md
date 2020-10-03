@@ -37,6 +37,9 @@ Ejecutar los tests unitarios
 
     poetry run task test
 
+Ejecutar los tests de cobertura
+
+    poetry run task coverage
 
 ## Herramientas utilizadas
 
