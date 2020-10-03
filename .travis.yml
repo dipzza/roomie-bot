@@ -1,3 +1,10 @@
-language: minimal
-
-script: /bin/true
+language: python
+python:
+    - "3.8"
+# installing dependencies
+install:
+    - pip install poetry
+    - poetry install
+# Running tests
+script:
+    - poetry run task test
