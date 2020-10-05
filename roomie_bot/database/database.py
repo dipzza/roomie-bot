@@ -16,7 +16,7 @@ class Database:
         self._c.execute('''
                         CREATE TABLE IF NOT EXISTS users (
                             user_id INT PRIMARY KEY,
-                            username TEXT NOT NULL
+                            username TEXT NOT NULL UNIQUE
                         );
                         ''')
         self._c.execute('''
@@ -55,6 +55,13 @@ class Database:
                         ''', (user_id, username, ))
         self._conn.commit()
 
+    def get_username(self, user_id: int):
+        user = self._c.execute('SELECT username FROM users WHERE user_id = ?',
+                               (user_id, )).fetchone()
+
+        if user is not None:
+            return user[0]
+
     def remove_user(self, user_id: int):
         self._c.execute('DELETE FROM users WHERE user_id = ?', (user_id, ))
         self._conn.commit()
@@ -88,8 +95,11 @@ class Database:
         self._conn.commit()
 
     def get_debt(self, user_id: int, chat_id: int):
-        return self._c.execute('SELECT debt FROM debts WHERE user_id = ? AND chat_id = ?',
+        debt = self._c.execute('SELECT debt FROM debts WHERE user_id = ? AND chat_id = ?',
                                (user_id, chat_id, )).fetchone()
+        
+        if debt is not None:
+            return debt[0]
 
     def get_debts(self, chat_id: int):
         return self._c.execute('SELECT user_id, debt FROM debts WHERE chat_id = ?', (chat_id, )).fetchall()

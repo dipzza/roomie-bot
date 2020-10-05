@@ -40,11 +40,15 @@ def register(update, context):
     else:
         db = Database()
         db.register_user(update.effective_user.id, update.effective_user.username)
-        update.message.reply_text('Successfully registered with username ' + update.effective_user.username)
         db.close()
+
+        update.message.reply_text('Successfully registered with username ' + update.effective_user.username)
 
 
 def pay(update, context):
+    # Check every user is registered
+    # Modify debt
+    # Add payment to log
     pass
 
 
@@ -53,7 +57,14 @@ def history(update, context):
 
 
 def debts(update, context):
-    pass
+    db = Database()
+    reply = ""
+
+    for debt in db.get_debts(update.effective_chat.id):
+        reply += '{}: {}€\n'.format(db.get_username(debt[0]), debt[1])
+    db.close()
+
+    update.message.reply_text(reply)
 
 
 def help(update, context):

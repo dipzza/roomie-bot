@@ -6,6 +6,8 @@ from roomie_bot.database.database import Database
 
 ID = 1
 BAD_ID = 10
+USERNAME = "Usuario"
+USERNAME_2 = "Usuario2"
 MONEY = 5.0
 DEF_DEBT = 0.0
 
@@ -15,7 +17,7 @@ def sim_db():
     db = Database("test.sqlite")
     db.setup()
 
-    db.register_user(ID, "")
+    db.register_user(ID, USERNAME)
     db._c.execute('INSERT OR REPLACE INTO debts (user_id, chat_id) VALUES (?, ?);', (ID, ID, ))
 
     db._conn.commit()
@@ -25,28 +27,22 @@ def sim_db():
     db.close()
 
 
+def test_get_username(sim_db):
+    assert sim_db.get_username(ID) == USERNAME
+
+
 def test_register_user(sim_db):
-    sim_db.register_user(BAD_ID, "@usuario")
+    sim_db.register_user(BAD_ID, USERNAME_2)
 
-    new_user = sim_db._c.execute('''
-                             SELECT user_id, username FROM users
-                             WHERE user_id = ?
-                             ''', (BAD_ID, )).fetchone()
-
-    assert (BAD_ID, "@usuario") == new_user
+    assert sim_db.get_username(BAD_ID) == USERNAME_2
 
     sim_db.remove_user(BAD_ID)
 
-    removed_user = sim_db._c.execute('''
-                             SELECT user_id, username FROM users
-                             WHERE user_id = ?
-                             ''', (BAD_ID, )).fetchone()
-
-    assert removed_user is None
+    assert sim_db.get_username(BAD_ID) is None
 
 
 def test_get_debt(sim_db):
-    assert DEF_DEBT == sim_db.get_debt(ID, ID)[0]
+    assert DEF_DEBT == sim_db.get_debt(ID, ID)
 
 
 def test_get_debt_none(sim_db):
@@ -60,7 +56,7 @@ def test_get_debts(sim_db):
 def test_add_debt(sim_db):
     sim_db.add_debt(ID, BAD_ID, MONEY)
 
-    assert MONEY == sim_db.get_debt(ID, BAD_ID)[0]
+    assert MONEY == sim_db.get_debt(ID, BAD_ID)
 
     sim_db._c.execute('DELETE FROM debts WHERE chat_id = ?;', (BAD_ID, ))
     sim_db._conn.commit()
@@ -69,7 +65,7 @@ def test_add_debt(sim_db):
 def test_update_debt(sim_db):
     sim_db.update_debt(ID, ID, MONEY)
 
-    assert MONEY == sim_db.get_debt(ID, ID)[0]
+    assert MONEY == sim_db.get_debt(ID, ID)
 
     sim_db.update_debt(ID, ID, DEF_DEBT)
 
