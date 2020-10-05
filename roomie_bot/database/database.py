@@ -14,11 +14,19 @@ class Database:
 
     def setup(self):
         self._c.execute('''
+                        CREATE TABLE IF NOT EXISTS users (
+                            user_id INT PRIMARY KEY,
+                            username TEXT NOT NULL
+                        );
+                        ''')
+        self._c.execute('''
                         CREATE TABLE IF NOT EXISTS debts (
                             user_id INT,
                             chat_id INT,
                             debt DOUBLE NOT NULL DEFAULT 0,
-                            PRIMARY KEY (user_id, chat_id)
+                            PRIMARY KEY (user_id, chat_id),
+                            FOREIGN KEY (user_id) REFERENCES users(user_id)
+                            ON DELETE CASCADE
                         );
                         ''')
         self._c.execute('''
@@ -34,6 +42,21 @@ class Database:
                             ON UPDATE RESTRICT
                         );
                         ''')
+        self._conn.commit()
+
+    def close(self):
+        self._conn.close()
+
+    # Register user
+    def register_user(self, user_id: int, username: str):
+        self._c.execute('''
+                        INSERT OR REPLACE INTO users (user_id, username)
+                        VALUES (?, ?);
+                        ''', (user_id, username, ))
+        self._conn.commit()
+
+    def remove_user(self, user_id: int):
+        self._c.execute('DELETE FROM users WHERE user_id = ?', (user_id, ))
         self._conn.commit()
 
     # Expenses related

@@ -15,11 +15,34 @@ def sim_db():
     db = Database("test.sqlite")
     db.setup()
 
+    db.register_user(ID, "")
     db._c.execute('INSERT OR REPLACE INTO debts (user_id, chat_id) VALUES (?, ?);', (ID, ID, ))
 
     db._conn.commit()
 
-    return db
+    yield db
+
+    db.close()
+
+
+def test_register_user(sim_db):
+    sim_db.register_user(BAD_ID, "@usuario")
+
+    new_user = sim_db._c.execute('''
+                             SELECT user_id, username FROM users
+                             WHERE user_id = ?
+                             ''', (BAD_ID, )).fetchone()
+
+    assert (BAD_ID, "@usuario") == new_user
+
+    sim_db.remove_user(BAD_ID)
+
+    removed_user = sim_db._c.execute('''
+                             SELECT user_id, username FROM users
+                             WHERE user_id = ?
+                             ''', (BAD_ID, )).fetchone()
+
+    assert removed_user is None
 
 
 def test_get_debt(sim_db):
@@ -27,7 +50,7 @@ def test_get_debt(sim_db):
 
 
 def test_get_debt_none(sim_db):
-    assert None == sim_db.get_debt(BAD_ID, BAD_ID)
+    assert sim_db.get_debt(BAD_ID, BAD_ID) is None
 
 
 def test_get_debts(sim_db):
@@ -35,11 +58,11 @@ def test_get_debts(sim_db):
 
 
 def test_add_debt(sim_db):
-    sim_db.add_debt(BAD_ID, BAD_ID, MONEY)
+    sim_db.add_debt(ID, BAD_ID, MONEY)
 
-    assert MONEY == sim_db.get_debt(BAD_ID, BAD_ID)[0]
+    assert MONEY == sim_db.get_debt(ID, BAD_ID)[0]
 
-    sim_db._c.execute('DELETE FROM debts WHERE user_id = ?;', (BAD_ID, ))
+    sim_db._c.execute('DELETE FROM debts WHERE chat_id = ?;', (BAD_ID, ))
     sim_db._conn.commit()
 
 

@@ -4,7 +4,9 @@
 import logging
 import os
 
+from database.database import Database
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+
 
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -12,15 +14,34 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 
 logger = logging.getLogger(__name__)
 
+# Initialize database
+db = Database()
+db.setup()
+
 
 # Define a few command handlers.
 def start(update, context):
     """Send a message when the command /start is issued."""
     update.message.reply_text(
-        'Hi! I am roomie, a bot with tools to make life easier between roommates.' +
-        '\nI can help you tracking your expenses or organizing tasks' +
-        '\n\nSend /help for a list of commands'
+        '''
+        Hi! I am roomie, a bot with tools to make life easier between roommates.
+        \nI can help you tracking your expenses or organizing tasks
+        \nFirst, every user should /register (you should have a username set up)
+        \n\nSend /help for a list of commands
+        '''
     )
+
+
+def register(update, context):
+    if update.effective_user.username is None:
+        update.message.reply_text('You need an username to /register'
+                                  '\n\nTo set up one go to settings in'
+                                  ' telegram and select "username"')
+    else:
+        db = Database()
+        db.register_user(update.effective_user.id, update.effective_user.username)
+        update.message.reply_text('Successfully registered with username ' + update.effective_user.username)
+        db.close()
 
 
 def pay(update, context):
@@ -56,9 +77,10 @@ def main():
 
     # on different commands - answer in Telegram
     dp.add_handler(CommandHandler("start", start))
-    dp.add_handler(CommandHandler("pay", help))
-    dp.add_handler(CommandHandler("history", help))
-    dp.add_handler(CommandHandler("debts", help))
+    dp.add_handler(CommandHandler("register", register))
+    dp.add_handler(CommandHandler("pay", pay))
+    dp.add_handler(CommandHandler("history", history))
+    dp.add_handler(CommandHandler("debts", debts))
     dp.add_handler(CommandHandler("help", help))
 
     # log all errors
