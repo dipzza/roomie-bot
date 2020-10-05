@@ -62,6 +62,13 @@ class Database:
         if user is not None:
             return user[0]
 
+    def get_userid(self, username: str):
+        user = self._c.execute('SELECT user_id FROM users WHERE username = ?',
+                               (username, )).fetchone()
+
+        if user is not None:
+            return user[0]
+
     def remove_user(self, user_id: int):
         self._c.execute('DELETE FROM users WHERE user_id = ?', (user_id, ))
         self._conn.commit()

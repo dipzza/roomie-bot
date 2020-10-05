@@ -18,6 +18,8 @@ logger = logging.getLogger(__name__)
 db = Database()
 db.setup()
 
+DEC = 2
+
 
 # Define a few command handlers.
 def start(update, context):
@@ -46,10 +48,66 @@ def register(update, context):
 
 
 def pay(update, context):
-    # Check every user is registered
-    # Modify debt
-    # Add payment to log
-    pass
+    db = Database()
+    valid_format = True
+    errors = ''
+
+    # Check argument size and format
+    if len(context.args) >= 2:
+        # Check correct format for money
+        money = context.args[0]
+
+        try:
+            money = float(money)
+        except ValueError:
+            errors += 'Error: {} is not an amount of money\n'.format(money)
+            valid_format = False
+
+        # Check payer is registered
+        if db.get_username(update.effective_user.id) is None:
+            errors += 'Error: You are not registered\n'
+            valid_format = False
+
+        # Check debtors are registered
+        debtors = []
+
+        for debtor in context.args[1:]:
+            userid = db.get_userid(debtor[1:])
+            if userid is None:
+                errors += 'Error: {} is not registered\n'.format(debtor)
+                valid_format = False
+            else:
+                debtors.append(userid)
+    else:
+        valid_format = False
+
+    if valid_format:
+        # Modify debt
+        extra_debt = money / len(context.args[1:])
+
+        # Update payer debt
+        debt = db.get_debt(update.effective_user.id, update.message.chat_id)
+
+        if debt is None:
+            db.add_debt(update.effective_user.id, update.message.chat_id, round(money, DEC))
+        else:
+            db.update_debt(update.effective_user.id, update.message.chat_id, round(debt + money, DEC))
+
+        # Update debtors debt
+        for debtor in debtors:
+            debt = db.get_debt(debtor, update.effective_chat.id)
+
+            if debt is None:
+                db.add_debt(debtor, update.effective_chat.id, round(-extra_debt, DEC))
+            else:
+                db.update_debt(debtor, update.effective_chat.id, round(debt - extra_debt, DEC))
+
+        update.message.reply_text('Payment added succesfully\nCheck new debts with /debts')
+    else:
+        errors += 'Format: /pay money @debtor1 [@debtor2...]'
+        update.message.reply_text(errors)
+
+    db.close()
 
 
 def history(update, context):

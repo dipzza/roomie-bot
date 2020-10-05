@@ -31,6 +31,10 @@ def test_get_username(sim_db):
     assert sim_db.get_username(ID) == USERNAME
 
 
+def test_get_userid(sim_db):
+    assert sim_db.get_userid(USERNAME) == ID
+
+
 def test_register_user(sim_db):
     sim_db.register_user(BAD_ID, USERNAME_2)
 
