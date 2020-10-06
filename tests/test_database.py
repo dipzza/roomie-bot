@@ -57,6 +57,10 @@ def test_get_debts(sim_db):
     assert [(ID, DEF_DEBT)] == sim_db.get_debts(ID)
 
 
+def test_get_debts_none(sim_db):
+    assert [] == sim_db.get_debts(BAD_ID)
+
+
 def test_add_debt(sim_db):
     sim_db.add_debt(ID, BAD_ID, MONEY)
 

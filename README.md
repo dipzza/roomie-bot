@@ -54,9 +54,9 @@ Discutido en Issue [#3](https://github.com/dipzza/roomie-bot/issues/3)
 ## Estructura del proyecto
 
 + Todo el código se encuentra en la carpeta 'roomie-bot'.
-	- El módulo principal [bot.py](roomie-bot/bot.py) se encarga de recibir y responder a los mensajes de telegram llamando a los siguientes submodulos
+	- El módulo principal [bot.py](roomie-bot/bot.py) se encarga de recibir y responder a los mensajes de telegram llamando a los siguientes submodulos.
 	- El módulo [database](roomie-bot/database/) se encarga de hacer operaciones en la base de datos sqlite.
-	- El módulo [expenses](roomie-bot/expenses/) se encarga de procesar todo lo necesario relativo a las deudas.
+	- El módulo [expenses](roomie-bot/expenses/) se encarga de procesar todo lo relativo a las deudas.
 
 ## Contribuidores
 + [Francisco Javier Bolívar Expósito](https://github.com/dipzza)
