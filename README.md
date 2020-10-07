@@ -32,7 +32,7 @@ Ejecutar el bot
         
     ó
         
-        poetry run roomie_bot/bot.py
+        poetry run python -m roomie_bot
 
 Ejecutar los tests unitarios
 
