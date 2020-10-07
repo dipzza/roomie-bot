@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from database.database import Database
+from roomie_bot.database.database import Database
+
+DBNAME = "room.sqlite"
 
 
 def is_number(text: str):
@@ -12,9 +14,9 @@ def is_number(text: str):
         return False
 
 
-def get_debts(chat_id: int):
+def get_debts(chat_id: int, dbname: str = DBNAME):
     reply = ""
-    db = Database()
+    db = Database(dbname)
     debts = db.get_debts(chat_id)
 
     for debt in debts:
@@ -25,8 +27,8 @@ def get_debts(chat_id: int):
     return reply
 
 
-def new_payment(payer_id: int, chat_id: int, money: float, debtors_id, round_dec: int = 2):
-    db = Database()
+def new_payment(payer_id: int, chat_id: int, money: float, debtors_id, round_dec: int = 2, dbname: str = DBNAME):
+    db = Database(dbname)
 
     # Update payer debt
     debt = db.get_debt(payer_id, chat_id)

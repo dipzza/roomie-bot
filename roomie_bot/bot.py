@@ -3,9 +3,10 @@
 
 import logging
 import os
-import expenses.expenses as expenses
 
-from database.database import Database
+import roomie_bot.expenses.expenses as expenses
+from roomie_bot.database.database import Database
+
 from telegram.ext import Updater, CommandHandler
 
 
@@ -129,7 +130,3 @@ def main():
 
     # Run the bot until interrupted
     updater.idle()
-
-
-if __name__ == '__main__':
-    main()
