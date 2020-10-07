@@ -22,7 +22,7 @@ Instalar todas las dependencias incluidas las de desarrollo (necesario para usar
 
 Ejecutar el bot
 
-1. Exporta una variable de entorno llamada TOKEN con el token de tu bot. Ejemplo en linux.
+1. Exporta una variable de entorno llamada TOKEN con el token de tu bot.
         
         export TOKEN="your_api_token"
 
@@ -41,6 +41,10 @@ Ejecutar los tests unitarios
 Ejecutar los tests de cobertura
 
     poetry run task coverage
+
+Ejecutar servidor de API REST
+
+    poetry run task run
 
 ## Herramientas utilizadas
 

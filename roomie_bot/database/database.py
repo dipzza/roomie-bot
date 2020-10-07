@@ -44,6 +44,11 @@ class Database:
                         ''')
         self._conn.commit()
 
+    def clean(self):
+        self._c.execute('DROP TABLE payments')
+        self._c.execute('DROP TABLE debts')
+        self._c.execute('DROP TABLE users')
+
     def close(self):
         self._conn.close()
 
@@ -81,9 +86,18 @@ class Database:
                         ''', (user_id, chat_id, money, description, ))
         self._conn.commit()
 
+    def get_payment(self, payment_id: int):
+        payment = self._c.execute('''
+                                  SELECT user_id, chat_id, money, description
+                                  FROM payments WHERE payment_id = ?
+                                  ''', (payment_id, )).fetchone()
+
+        if payment is not None:
+            return payment
+
     def get_payments(self, chat_id: int, n: int = 10):
         return self._c.execute('''
-                                SELECT payment_id, user_id, money, description FROM payments
+                                SELECT user_id, money, description FROM payments
                                 WHERE chat_id = ?
                                 ORDER BY payment_id DESC
                                 LIMIT ?
@@ -104,7 +118,7 @@ class Database:
     def get_debt(self, user_id: int, chat_id: int):
         debt = self._c.execute('SELECT debt FROM debts WHERE user_id = ? AND chat_id = ?',
                                (user_id, chat_id, )).fetchone()
-        
+
         if debt is not None:
             return debt[0]
 

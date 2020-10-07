@@ -17,7 +17,7 @@ def is_number(text: str):
 def get_debts(chat_id: int, dbname: str = DBNAME):
     reply = ''
     db = Database(dbname)
-    
+
     debts = db.get_debts(chat_id)
     for debt in debts:
         reply += '{}: {}€\n'.format(db.get_username(debt[0]), debt[1])
@@ -30,13 +30,13 @@ def get_debts(chat_id: int, dbname: str = DBNAME):
 def get_payments(chat_id: int, dbname: str = DBNAME):
     reply = ''
     db = Database(dbname)
-    
+
     payments = db.get_payments(chat_id)
     for payment in payments:
-        reply += '{} payed {} for {}\n'.format(db.get_username(payment[1]), payment[2], payment[3])
-    
+        reply += '{} payed {} for {}\n'.format(db.get_username(payment[0]), payment[1], payment[2])
+
     db.close()
-    
+
     return reply
 
 
@@ -61,8 +61,8 @@ def new_payment(payer_id: int, chat_id: int, money: float, debtors_id, debtors_u
             db.add_debt(user_id, chat_id, round(-extra_debt, round_dec))
         else:
             db.update_debt(user_id, chat_id, round(debt - extra_debt, round_dec))
-    
-    ## Add payment to history
+
+    # Add payment to history
     desc = ' '
 
     db.add_payment(payer_id, chat_id, money, desc.join(debtors_username))

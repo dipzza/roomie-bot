@@ -4,6 +4,6 @@
     "ficheros" : ["roomie_bot/bot.py",
                 "roomie_bot/database/database.py",
                 "roomie_bot/expenses/expenses.py"],
-    "test" : ["tests/test_database.py"],
+    "test" : ["tests/test_database.py", "tests/test_expenses.py", "tests/test_api_rest"],
     "runner" : "poetry run task"
 }

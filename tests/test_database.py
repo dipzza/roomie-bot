@@ -14,13 +14,11 @@ DEF_DEBT = 0.0
 
 @pytest.fixture
 def sim_db():
-    db = Database("test.sqlite")
+    db = Database(":memory:")
     db.setup()
 
     db.register_user(ID, USERNAME)
-    db._c.execute('INSERT OR REPLACE INTO debts (user_id, chat_id) VALUES (?, ?);', (ID, ID, ))
-
-    db._conn.commit()
+    db.add_debt(ID, ID, DEF_DEBT)
 
     yield db
 
@@ -31,8 +29,16 @@ def test_get_username(sim_db):
     assert sim_db.get_username(ID) == USERNAME
 
 
+def test_get_username_none(sim_db):
+    assert sim_db.get_username(BAD_ID) is None
+
+
 def test_get_userid(sim_db):
     assert sim_db.get_userid(USERNAME) == ID
+
+
+def test_get_userid_none(sim_db):
+    assert sim_db.get_userid(USERNAME_2) is None
 
 
 def test_register_user(sim_db):
@@ -66,22 +72,20 @@ def test_add_debt(sim_db):
 
     assert MONEY == sim_db.get_debt(ID, BAD_ID)
 
-    sim_db._c.execute('DELETE FROM debts WHERE chat_id = ?;', (BAD_ID, ))
-    sim_db._conn.commit()
-
 
 def test_update_debt(sim_db):
     sim_db.update_debt(ID, ID, MONEY)
 
     assert MONEY == sim_db.get_debt(ID, ID)
 
-    sim_db.update_debt(ID, ID, DEF_DEBT)
-
 
 def test_payment(sim_db):
     sim_db.add_payment(ID, ID, MONEY, "")
 
-    assert [(1, ID, MONEY, "")] == sim_db.get_payments(ID, 1)
+    assert [(ID, MONEY, "")] == sim_db.get_payments(ID)
 
-    sim_db._c.execute('DELETE FROM payments WHERE payment_id = 1;')
-    sim_db._conn.commit()
+
+def test_get_payment(sim_db):
+    sim_db.add_payment(ID, ID, MONEY, "")
+
+    assert (ID, ID, MONEY, "") == sim_db.get_payment(1)
