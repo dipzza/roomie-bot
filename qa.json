@@ -5,7 +5,7 @@
                 "roomie_bot/database/database.py",
                 "roomie_bot/expenses/expenses.py",
 		"roomie_bot/api_rest/server.py"],
-    "test" : ["tests/test_bot.py", tests/test_database.py", "tests/test_expenses.py", "tests/test_api_rest.py"],
+    "test" : ["tests/test_bot.py", "tests/test_database.py", "tests/test_expenses.py", "tests/test_api_rest.py"],
     "runner" : "poetry run task",
     "dateador" : "tests/test_database.py"
 }
