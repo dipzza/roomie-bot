@@ -20,7 +20,7 @@ pytest-xdist = "^2.1.0"
 [tool.taskipy.tasks]
 bot = "python -m roomie_bot"
 test = "python -m pytest"
-coverage = "python -m pytest --cov=./"
+coverage = "python -m pytest --cov=./roomie_bot"
 run = "export FLASK_APP=roomie_bot/api_rest/server.py && python -m flask run"
 
 [build-system]

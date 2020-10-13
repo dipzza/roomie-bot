@@ -68,12 +68,16 @@ def pay(update, context):
             else:
                 debtors_id.append(userid)
         db.close()
+    else:
+        errors += 'Format: /pay money @debtor1 [@debtor2..]'
 
     if errors:
-        errors += 'Format: /pay money @debtor1 [@debtor2..]'
+        if errors.split()[0] != 'Format:':
+            errors += 'Format: /pay money @debtor1 [@debtor2..]'
         update.message.reply_text(errors)
     else:
-        expenses.new_payment(update.effective_user.id, update.message.chat_id, money, debtors_id, context.args[1:])
+        expenses.new_payment(update.effective_user.id, update.message.chat_id,
+                             money, debtors_id, context.args[1:])
 
         update.message.reply_text('Payment added succesfully'
                                   '\nCheck new debts with /debts')
